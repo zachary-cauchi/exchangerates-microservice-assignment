@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Exchange.API.Infrastructure.EntityConfigurations
 {
-    public class ExchangeApiEntityTypeConfiguration
+    public class CurrencyEntityTypeConfiguration
         : IEntityTypeConfiguration<Currency>
     {
         public void Configure(EntityTypeBuilder<Currency> builder)

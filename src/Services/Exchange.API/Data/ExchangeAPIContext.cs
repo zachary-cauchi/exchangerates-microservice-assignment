@@ -17,10 +17,12 @@ namespace Exchange.API.Data
         }
 
         public DbSet<Currency> Currency { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new ExchangeApiEntityTypeConfiguration());
+            builder.ApplyConfiguration(new CurrencyEntityTypeConfiguration());
+            builder.ApplyConfiguration(new UserEntityTypeConfiguration());
         }
     }
 }

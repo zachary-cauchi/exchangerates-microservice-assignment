@@ -24,16 +24,16 @@ namespace Exchange.API.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "{id}")]
+        [HttpGet(Name = "{currencyId}")]
         [ProducesResponseType(typeof(Currency), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Currency>> GetCurrencyByIdAsync([FromQuery] int id)
+        public async Task<ActionResult<Currency>> GetCurrencyByIdAsync([FromQuery] int currencyId)
         {
-            var currency = await _service.GetCurrencyByIdAsync(id);
+            var currency = await _service.GetCurrencyByIdAsync(currencyId);
 
             if (currency == null)
             {
-                _logger.LogWarning($"Tried looking for currency {id} but was not found.");
+                _logger.LogWarning($"Tried looking for currency {currencyId} but was not found.");
 
                 return NotFound();
             }

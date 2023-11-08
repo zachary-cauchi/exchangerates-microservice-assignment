@@ -29,10 +29,12 @@ builder.Services.AddDbContexts(builder.Configuration);
 // Add repositories.
 
 builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Add services.
 
 builder.Services.AddScoped<ICurrencyService, CurrencyService>();
+builder.Services.AddScoped<IUserService,  UserService>();
 
 // Configure logging.
 

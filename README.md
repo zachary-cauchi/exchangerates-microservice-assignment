@@ -10,10 +10,10 @@
 
 ### Roadmap 1:
 
-* [ ] Create tables and data structures for users.
+* [x] Create tables and data structures for users.
 * [ ] Create tables and data structures for exchange rates.
 * [ ] Create tables and data structures for past exchanges.
-* [ ] Create a controller that gets users.
+* [x] Create a controller that gets users.
 * [ ] Create a controller that gets exchange rates (seeded with dummy data for now).
 * [ ] Create a controller that gets and creates exchanges.
 * [ ] Set up a testing strategy.
