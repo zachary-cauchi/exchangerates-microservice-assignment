@@ -7,34 +7,30 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Exchange.API.Data;
 using Exchange.API.Models;
+using Exchange.API.Services;
 
 namespace Exchange.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CurrenciesController : Controller
+    public class CurrencyController : Controller
     {
-        private readonly ExchangeAPIContext _context;
+        private readonly ICurrencyService _service;
         private readonly ILogger _logger;
 
-        public CurrenciesController(ExchangeAPIContext context, ILogger<CurrenciesController> logger)
+        public CurrencyController(ICurrencyService service, ILogger<CurrencyController> logger)
         {
-            _context = context;
+            _service = service;
             _logger = logger;
         }
 
         [HttpGet(Name = "{id}")]
         [ProducesResponseType(typeof(Currency), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Currency>> GetCurrencyByIdAsync([FromQuery] int? id)
+        public async Task<ActionResult<Currency>> GetCurrencyByIdAsync([FromQuery] int id)
         {
-            if (id == null || _context.Currency == null)
-            {
-                return NotFound();
-            }
+            var currency = await _service.GetCurrencyByIdAsync(id);
 
-            var currency = await _context.Currency
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (currency == null)
             {
                 _logger.LogWarning($"Tried looking for currency {id} but was not found.");
@@ -43,11 +39,6 @@ namespace Exchange.API.Controllers
             }
 
             return Ok(currency);
-        }
-
-        private bool CurrencyExists(int id)
-        {
-          return (_context.Currency?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

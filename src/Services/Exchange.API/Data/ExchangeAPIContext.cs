@@ -9,7 +9,7 @@ using Exchange.API.Infrastructure.EntityConfigurations;
 
 namespace Exchange.API.Data
 {
-    public class ExchangeAPIContext : DbContext
+    public class ExchangeAPIContext : DbContext, IUnitOfWork
     {
         public ExchangeAPIContext (DbContextOptions<ExchangeAPIContext> options)
             : base(options)
