@@ -6,7 +6,7 @@
 * [x] Get a working database set up.
 * [x] Create a table in that database with dummy data.
 * [x] Return data from that database.
-* [ ] Set up a logging scheme for these APIs.
+* [x] Set up a logging scheme for these APIs.
 
 ### Roadmap 1:
 
@@ -27,3 +27,4 @@
 ### Roadmap 3:
 
 * [ ] Polish up deployment data support.
+* [ ] Fix Seq integration.

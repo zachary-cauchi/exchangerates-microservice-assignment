@@ -15,10 +15,12 @@ namespace Exchange.API.Controllers
     public class CurrenciesController : Controller
     {
         private readonly ExchangeAPIContext _context;
+        private readonly ILogger _logger;
 
-        public CurrenciesController(ExchangeAPIContext context)
+        public CurrenciesController(ExchangeAPIContext context, ILogger<CurrenciesController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet(Name = "{id}")]
@@ -35,6 +37,8 @@ namespace Exchange.API.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (currency == null)
             {
+                _logger.LogWarning($"Tried looking for currency {id} but was not found.");
+
                 return NotFound();
             }
 

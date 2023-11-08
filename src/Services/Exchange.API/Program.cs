@@ -2,10 +2,16 @@
 using Microsoft.Extensions.DependencyInjection;
 using Exchange.API.Data;
 using Exchange.API.Extensions;
+using Serilog;
+using Serilog.Events;
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .CreateBootstrapLogger();
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<ExchangeAPIContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ExchangeAPIContext") ?? throw new InvalidOperationException("Connection string 'ExchangeAPIContext' not found.")));
 
 // Add services to the container.
 
@@ -16,7 +22,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContexts(builder.Configuration);
 
+builder.ConfigureExchangeLogging(builder.Configuration);
+
+
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
