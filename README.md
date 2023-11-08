@@ -2,10 +2,10 @@
 
 ### Roadmap 0:
 
-* [ ] Get a barebones 'Hello World' API running.
-* [ ] Get a working database set up.
-* [ ] Create a table in that database with dummy data.
-* [ ] Return data from that database.
+* [x] Get a barebones 'Hello World' API running.
+* [x] Get a working database set up.
+* [x] Create a table in that database with dummy data.
+* [x] Return data from that database.
 * [ ] Set up a logging scheme for these APIs.
 
 ### Roadmap 1:
@@ -22,3 +22,8 @@
 * [ ] Implement an identity setup to allow existing users to sign in.
 * [ ] Allow the user to perform currency exchanges using the currency API and record them to the database.
 * [ ] Develop unit tests for these services.
+
+
+### Roadmap 3:
+
+* [ ] Polish up deployment data support.
