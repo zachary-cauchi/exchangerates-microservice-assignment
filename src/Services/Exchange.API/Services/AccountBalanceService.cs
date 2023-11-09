@@ -2,6 +2,7 @@
 using Exchange.API.Models;
 using Exchange.API.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Exchange.API.Services
 {
@@ -35,8 +36,13 @@ namespace Exchange.API.Services
             if (srcAccountBalance.CurrencyId == destAccountBalance.CurrencyId) throw new InvalidOperationException("The source and destination account balances cannot have the same currency.");
             if (srcAccountBalance.UserId != destAccountBalance.UserId) throw new InvalidOperationException("The source and destination account balances must have the same user.");
 
-            //TODO: Replace with actual transaction logic.
-            destAccountBalance.Balance += destAmount;
+            //TODO: Migrate this logic to an event-based architecture to decouple it from the service.
+            await _repository.UnitOfWork.ExecuteTransactionAsync(() =>
+            {
+                destAccountBalance.Balance += destAmount;
+                srcAccountBalance.Balance -= srcAmount;
+                _repository.UpdateAccountBalance(destAccountBalance);
+            }, "ExchangeCurrency");
 
             return destAccountBalance;
         }

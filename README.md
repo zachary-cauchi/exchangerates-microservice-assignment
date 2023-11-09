@@ -16,7 +16,7 @@
 * [ ] Create tables and data structures for past exchanges.
 * [x] Create a controller that gets users.
 * [ ] Create a controller that gets exchange rates (seeded with dummy data for now).
-* [ ] Create a controller that gets and creates exchanges.
+* [x] Create a controller that gets and creates exchanges.
 * [ ] Set up a testing strategy.
 * [ ] Test the business logic behind the currency exchanges.
 
@@ -26,7 +26,7 @@
 * [ ] Implement a service that fetches a currency rate from one of the chosen APIs.
 * [ ] Save that information to a database.
 * [ ] Create an endpoint to get currency rates from the database and fetch that record if it's less than 30 minutes old.
-* [ ] If the currency record 30 minutes old or older, update it with a new rate record instead.
+* [ ] If the currency record is 30 minutes old or older, update it with a new rate record instead.
 * [ ] Develop unit tests for these services.
 
 ### Roadmap 3:

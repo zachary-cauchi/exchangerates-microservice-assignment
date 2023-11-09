@@ -26,5 +26,10 @@ namespace Exchange.API.Repositories
 
             return accountBalance;
         }
+
+        public void UpdateAccountBalance(AccountBalance accountBalance)
+        {
+            _context.Entry(accountBalance).State = EntityState.Modified;
+        }
     }
 }
