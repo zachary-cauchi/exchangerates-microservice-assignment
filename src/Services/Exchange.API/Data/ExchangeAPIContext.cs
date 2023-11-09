@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Exchange.API.Models;
-using Microsoft.EntityFrameworkCore.Design;
-using Exchange.API.Infrastructure.EntityConfigurations;
-using Microsoft.EntityFrameworkCore.Storage;
-using System.Data;
-
-namespace Exchange.API.Data
+﻿namespace Exchange.API.Data
 {
     public class ExchangeAPIContext : DbContext, IUnitOfWork
     {
@@ -41,7 +30,7 @@ namespace Exchange.API.Data
             builder.ApplyConfiguration(new PastTransactionEntityTypeConfiguration());
         }
 
-        public Task ExecuteTransactionAsync(Action transactionChanges, string message)
+        public Task ExecuteTransactionAsync(Action transactionChanges, string message, CancellationToken? cancellationToken = null)
         {
             var strategy = Database.CreateExecutionStrategy();
 

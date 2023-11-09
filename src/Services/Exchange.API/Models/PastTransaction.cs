@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Exchange.API.Models
+﻿namespace Exchange.API.Models
 {
     public class PastTransaction : IAggregateRoot
     {
@@ -8,17 +6,14 @@ namespace Exchange.API.Models
 
         public int UserId { get; set; }
 
-        //[JsonIgnore]
         public User User { get; set; } = null!;
 
         public int FromAccountBalanceId { get; set; }
 
-        //[JsonIgnore]
         public AccountBalance FromAccountBalance { get; set; } = null!;
 
         public int ToAccountBalanceId { get; set; }
 
-        //[JsonIgnore]
         public AccountBalance ToAccountBalance { get; set; } = null!;
 
         public decimal DebitedAmount { get; set; }
@@ -29,14 +24,33 @@ namespace Exchange.API.Models
 
         public int FromCurrencyId { get; set; }
 
-        //[JsonIgnore]
         public Currency FromCurrency { get; set; } = null!;
 
         public int ToCurrencyId { get; set;}
 
-        //[JsonIgnore]
         public Currency ToCurrency { get; set; } = null!;
 
         public decimal ExchangeRate { get; set; }
+
+        public PastTransaction()
+        {
+
+        }
+
+        public PastTransaction(User user, AccountBalance fromAccountBalance, AccountBalance toAccountBalance, decimal debitedAmount, DateTime timeEffected, Currency fromCurrency, Currency toCurrency, decimal exchangeRate)
+        {
+            UserId = user.Id;
+            FromAccountBalanceId = fromAccountBalance.Id;
+            FromCurrencyId = fromCurrency.Id;
+            ToCurrencyId = toCurrency.Id;
+            ToAccountBalanceId = toAccountBalance.Id;
+            DebitedAmount = debitedAmount;
+            TimeEffected = timeEffected;
+            FromCurrencyId = fromCurrency.Id;
+            ToCurrencyId = toCurrency.Id;
+            ExchangeRate = exchangeRate;
+            FromCurrency = fromCurrency;
+            ToCurrency = toCurrency;
+        }
     }
 }
