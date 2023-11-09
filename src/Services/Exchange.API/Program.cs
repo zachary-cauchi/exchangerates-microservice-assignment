@@ -1,11 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Exchange.API.Data;
-using Exchange.API.Extensions;
+﻿using Exchange.API.Validations;
+using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
-using Exchange.API.Repositories;
-using Exchange.API.Services;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -14,6 +11,7 @@ Log.Logger = new LoggerConfiguration()
     .CreateBootstrapLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
@@ -44,6 +42,15 @@ builder.Services.AddScoped<IPastTransactionService, PastTransactionService>();
 
 builder.ConfigureExchangeLogging(builder.Configuration);
 
+// Configure MediatR
+
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+});
+
+// Configure command validators.
+
+builder.Services.AddSingleton<IValidator<CreateCurrencyExchangeCommand>, CreateCurrencyExchangeCommandValidator>();
 
 var app = builder.Build();
 

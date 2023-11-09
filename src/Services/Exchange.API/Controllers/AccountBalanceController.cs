@@ -10,11 +10,13 @@ namespace Exchange.API.Controllers
     {
         private readonly IAccountBalanceService _service;
         private readonly ILogger<AccountBalanceController> _logger;
+        private readonly IMediator _mediator;
 
-        public AccountBalanceController(IAccountBalanceService accountBalanceService, ILogger<AccountBalanceController> logger)
+        public AccountBalanceController(IAccountBalanceService accountBalanceService, ILogger<AccountBalanceController> logger, IMediator mediator)
         {
             _service = accountBalanceService ?? throw new ArgumentNullException(nameof(accountBalanceService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mediator = mediator;
         }
 
         [HttpGet(Name = "{accountBalanceId}")]
@@ -35,20 +37,20 @@ namespace Exchange.API.Controllers
         [HttpPost(Name = "/exchange")]
         [ProducesResponseType(typeof(AccountBalance), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<AccountBalance>> ExchangeCurrenciesBetweenUserAccountsAsync(int srcAccountId, int destAccountId, decimal srcAmount)
+        public async Task<ActionResult<PastTransaction>> ExchangeCurrenciesBetweenUserAccountsAsync(int srcAccountId, int destAccountId, decimal srcAmount)
         {
-            AccountBalance accountBalance;
+            //AccountBalance accountBalance;
 
             try
             {
-                accountBalance = await _service.ExchangeCurrenciesAsync(srcAccountId, destAccountId, srcAmount, srcAmount * 2);
+                CreateCurrencyExchangeCommand createCurrencyExchangeCommand = new CreateCurrencyExchangeCommand(fromAccountBalanceId: srcAccountId, toAccountBalanceId: destAccountId, debitAmount: srcAmount, timeOfRate: DateTime.UtcNow, exchangeRate: 2);
+                var result = await _mediator.Send(createCurrencyExchangeCommand);
+                return result;
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-
-            return Ok(accountBalance);
         }
     }
 }

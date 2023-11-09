@@ -1,8 +1,4 @@
-﻿using Exchange.API.Data;
-using Exchange.API.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace Exchange.API.Repositories
+﻿namespace Exchange.API.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -24,9 +20,9 @@ namespace Exchange.API.Repositories
             return user;
         }
 
-        public async Task CreateAccountBalanceForUser(int userId, int currencyId)
-        {
+        //public async Task CreateAccountBalanceForUser(int userId, int currencyId)
+        //{
 
-        }
+        //}
     }
 }

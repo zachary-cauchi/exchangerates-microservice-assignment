@@ -17,11 +17,13 @@ namespace Exchange.API.Repositories
 
         public async Task<AccountBalance?> GetAccountBalanceByIdAsync(int id)
         {
-            var accountBalance = await _context.AccountBalances.FirstOrDefaultAsync(c => c.Id == id);
+            var accountBalance = await _context.AccountBalances
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (accountBalance == null)
             {
-                accountBalance = _context.AccountBalances.Local.FirstOrDefault(c => c.Id == id);
+                accountBalance = _context.AccountBalances.Local
+                    .FirstOrDefault(c => c.Id == id);
             }
 
             return accountBalance;
