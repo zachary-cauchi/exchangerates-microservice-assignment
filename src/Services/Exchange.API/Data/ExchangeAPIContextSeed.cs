@@ -58,8 +58,8 @@ namespace Exchange.API.Data
         {
             return new List<User>()
             {
-                new User() { Id = 1, FirstName = "Zachary", LastName = "Cauchi", Email = "foo@fizzbuzz.com" },
-                new User() { Id = 2, FirstName = "Someone", LastName = "", Email = "bar@fizzbazz.com" }
+                new User(id: 1, firstName: "Zachary", lastName: "Cauchi", email: "foo@fizzbuzz.com"),
+                new User(id: 2, firstName: "Someone", lastName: "", email: "bar@fizzbazz.com")
             };
         }
 

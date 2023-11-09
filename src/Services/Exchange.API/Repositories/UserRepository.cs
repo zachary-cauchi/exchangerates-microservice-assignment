@@ -18,10 +18,15 @@ namespace Exchange.API.Repositories
         public async Task<User?> GetUserByIdAsync(int id)
         {
             var user = await _context.Users
-                .Include(u => u.Accounts)
+                .Include(u => u.AccountBalances)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
             return user;
+        }
+
+        public async Task CreateAccountBalanceForUser(int userId, int currencyId)
+        {
+
         }
     }
 }

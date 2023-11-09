@@ -15,6 +15,7 @@ Will resolve it as it is an optional objective at this stage.
 Currency exchange trades:
 * Will require two currencies.
 * Will require one user.
+* Will require two account balances..
 * Will require at least one exchange rate between the two currencies.
 
 Flow:
@@ -23,6 +24,8 @@ Flow:
 	* If it is, send back the current rate.
 	* If it isn't, call the external api to get the latest rate (this will be mocked for now).
 * Call the post exchange rate endpoint passing in an amount to be exchanged.
-  * Check that the amount being exchanged is valid (greater than zero, etc.).
-  * If valid, record the transaction in a table as the currencies used, the amount exchanged, the amount received, the user performing it, and the date-time of the transaction.
+  * Check that the amount being exchanged is valid (greater than zero, less than the account balance, etc.).
+  * If valid, check that the target account balance exists.
+	* If not, create it and assign it to the user.
+  * Record the transaction in a table as the currencies used, the amount exchanged, the amount received, the user performing it, and the date-time of the transaction.
   * Return a success message and the transaction details saved.

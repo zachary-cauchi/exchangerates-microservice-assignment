@@ -18,7 +18,7 @@ namespace Exchange.API.Infrastructure.EntityConfigurations
                 .IsRequired();
 
             builder.HasOne(a => a.User)
-                .WithMany(u => u.Accounts)
+                .WithMany(u => u.AccountBalances)
                 .HasForeignKey(a => a.UserId)
                 .IsRequired();
 

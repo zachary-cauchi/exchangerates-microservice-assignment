@@ -29,7 +29,7 @@ namespace Exchange.API.Infrastructure.EntityConfigurations
                 .IsRequired(true)
                 .HasMaxLength(128);
 
-            builder.HasMany(u => u.Accounts)
+            builder.HasMany(u => u.AccountBalances)
                 .WithOne(a => a.User)
                 .HasForeignKey(a => a.UserId)
                 .IsRequired();
