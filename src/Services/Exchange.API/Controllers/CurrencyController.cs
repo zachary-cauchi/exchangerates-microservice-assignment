@@ -12,7 +12,7 @@ using Exchange.API.Services;
 namespace Exchange.API.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class CurrencyController : Controller
     {
         private readonly ICurrencyService _service;
