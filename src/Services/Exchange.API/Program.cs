@@ -30,11 +30,13 @@ builder.Services.AddDbContexts(builder.Configuration);
 
 builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAccountBalanceRepository, AccountBalanceRepository>();
 
 // Add services.
 
 builder.Services.AddScoped<ICurrencyService, CurrencyService>();
 builder.Services.AddScoped<IUserService,  UserService>();
+builder.Services.AddScoped<IAccountBalanceService, AccountBalanceService>();
 
 // Configure logging.
 

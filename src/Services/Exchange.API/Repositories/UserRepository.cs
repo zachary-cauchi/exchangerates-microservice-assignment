@@ -10,7 +10,7 @@ namespace Exchange.API.Repositories
 
         public UserRepository(ExchangeAPIContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
         public IUnitOfWork UnitOfWork => _context;
