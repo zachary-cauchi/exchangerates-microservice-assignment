@@ -4,6 +4,8 @@ using Exchange.API.Data;
 using Exchange.API.Extensions;
 using Serilog;
 using Serilog.Events;
+using Exchange.API.Repositories;
+using Exchange.API.Services;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -20,7 +22,25 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add DbContexts.
+
 builder.Services.AddDbContexts(builder.Configuration);
+
+// Add repositories.
+
+builder.Services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAccountBalanceRepository, AccountBalanceRepository>();
+builder.Services.AddScoped<IPastTransactionRepository, PastTransactionRepository>();
+
+// Add services.
+
+builder.Services.AddScoped<ICurrencyService, CurrencyService>();
+builder.Services.AddScoped<IUserService,  UserService>();
+builder.Services.AddScoped<IAccountBalanceService, AccountBalanceService>();
+builder.Services.AddScoped<IPastTransactionService, PastTransactionService>();
+
+// Configure logging.
 
 builder.ConfigureExchangeLogging(builder.Configuration);
 
