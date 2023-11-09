@@ -11,6 +11,7 @@
 ### Roadmap 1:
 
 * [x] Create tables and data structures for users.
+* [ ] Create tables and data structures for user account balances.
 * [ ] Create tables and data structures for exchange rates.
 * [ ] Create tables and data structures for past exchanges.
 * [x] Create a controller that gets users.
