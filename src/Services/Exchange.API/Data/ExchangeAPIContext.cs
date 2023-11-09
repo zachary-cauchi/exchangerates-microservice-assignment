@@ -19,6 +19,8 @@ namespace Exchange.API.Data
         public DbSet<User> Users { get; set; }
         public DbSet<AccountBalance> AccountBalances { get; set; }
 
+        public DbSet<PastTransaction> PastTransactions { get; set; }
+
         private IDbContextTransaction? _currentTransaction = null;
 
         public IDbContextTransaction? CurrentTransaction { get; }
@@ -36,6 +38,7 @@ namespace Exchange.API.Data
             builder.ApplyConfiguration(new CurrencyEntityTypeConfiguration());
             builder.ApplyConfiguration(new UserEntityTypeConfiguration());
             builder.ApplyConfiguration(new AccountBalanceEntityTypeConfiguration());
+            builder.ApplyConfiguration(new PastTransactionEntityTypeConfiguration());
         }
 
         public Task ExecuteTransactionAsync(Action transactionChanges, string message)

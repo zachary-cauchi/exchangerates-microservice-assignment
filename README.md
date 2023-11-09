@@ -13,7 +13,7 @@
 * [x] Create tables and data structures for users.
 * [x] Create tables and data structures for user account balances.
 * [ ] Create tables and data structures for exchange rates.
-* [ ] Create tables and data structures for past exchanges.
+* [x] Create tables and data structures for past exchanges.
 * [x] Create a controller that gets users.
 * [ ] Create a controller that gets exchange rates (seeded with dummy data for now).
 * [x] Create a controller that gets and creates exchanges.

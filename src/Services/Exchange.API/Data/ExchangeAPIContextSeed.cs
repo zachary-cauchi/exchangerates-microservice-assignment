@@ -11,37 +11,30 @@ namespace Exchange.API.Data
             var currencies = GetCurrencyData();
             var users = GetUserData();
             var accountBalances = GetAccountBalanceData();
+            var pastTransactions = GetPastTransactionsData();
 
             // Begin by clearing all database contents.
-            foreach (var accountBalance in accountBalances)
-            {
-                if (await context.AccountBalances.AnyAsync(a => a.Id == accountBalance.Id))
-                {
-                    context.AccountBalances.Remove(accountBalance);
-                }
-            }
-
-            context.SaveChanges();
-
-            foreach (var currency in context.Currency)
-            {
-                context.Currency.Remove(currency);
-            }
-
-            context.SaveChanges();
-
-            foreach (var user in context.Users)
-            {
-                context.Users.Remove(user);
-            }
+            PurgeDbSet(context.PastTransactions);
+            PurgeDbSet(context.AccountBalances);
+            PurgeDbSet(context.Currency);
+            PurgeDbSet(context.Users);
 
             context.SaveChanges();
 
             await context.Currency.AddRangeAsync(currencies);
             await context.Users.AddRangeAsync(users);
             await context.AccountBalances.AddRangeAsync(accountBalances);
+            await context.PastTransactions.AddRangeAsync(pastTransactions);
 
             await context.SaveChangesAsync();
+        }
+
+        private void PurgeDbSet<T>(DbSet<T> dbSet) where T : class
+        {
+            foreach (var entry in dbSet)
+            {
+                dbSet.Remove(entry);
+            }
         }
 
         private IEnumerable<Currency> GetCurrencyData()
@@ -69,6 +62,14 @@ namespace Exchange.API.Data
             {
                 new AccountBalance() { Id = 1, UserId = 1, CurrencyId = 1, Balance = 1337 },
                 new AccountBalance() { Id = 2, UserId = 1, CurrencyId = 2, Balance = 333 }
+            };
+        }
+
+        public IEnumerable<PastTransaction> GetPastTransactionsData()
+        {
+            return new List<PastTransaction>()
+            {
+                new PastTransaction() { Id = 1, UserId = 1, FromAccountBalanceId = 2, ToAccountBalanceId = 1, DebitedAmount = 20, TimeEffected = new DateTime(2023, 11, 08, 06, 06, 06), ExchangeRate = 2, FromCurrencyId = 2, ToCurrencyId = 1 }
             };
         }
     }
