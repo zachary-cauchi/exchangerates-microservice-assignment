@@ -28,6 +28,11 @@ namespace Exchange.API.Infrastructure.EntityConfigurations
             builder.Property(c => c.Email)
                 .IsRequired(true)
                 .HasMaxLength(128);
+
+            builder.HasMany(u => u.Accounts)
+                .WithOne(a => a.User)
+                .HasForeignKey(a => a.UserId)
+                .IsRequired();
         }
     }
 }

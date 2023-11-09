@@ -17,7 +17,11 @@ namespace Exchange.API.Repositories
 
         public async Task<User?> GetUserByIdAsync(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _context.Users
+                .Include(u => u.Accounts)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            return user;
         }
     }
 }

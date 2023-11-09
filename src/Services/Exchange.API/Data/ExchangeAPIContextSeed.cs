@@ -10,12 +10,26 @@ namespace Exchange.API.Data
         {
             var currencies = GetCurrencyData();
             var users = GetUserData();
+            var accountBalances = GetAccountBalanceData();
 
             // Begin by clearing all database contents.
+            foreach (var accountBalance in accountBalances)
+            {
+                if (await context.AccountBalances.AnyAsync(a => a.Id == accountBalance.Id))
+                {
+                    context.AccountBalances.Remove(accountBalance);
+                }
+            }
+
+            context.SaveChanges();
+
             foreach (var currency in context.Currency)
             {
                 context.Currency.Remove(currency);
             }
+
+            context.SaveChanges();
+
             foreach (var user in context.Users)
             {
                 context.Users.Remove(user);
@@ -25,6 +39,7 @@ namespace Exchange.API.Data
 
             await context.Currency.AddRangeAsync(currencies);
             await context.Users.AddRangeAsync(users);
+            await context.AccountBalances.AddRangeAsync(accountBalances);
 
             await context.SaveChangesAsync();
         }
@@ -45,6 +60,14 @@ namespace Exchange.API.Data
             {
                 new User() { Id = 1, FirstName = "Zachary", LastName = "Cauchi", Email = "foo@fizzbuzz.com" },
                 new User() { Id = 2, FirstName = "Someone", LastName = "", Email = "bar@fizzbazz.com" }
+            };
+        }
+
+        private IEnumerable<AccountBalance> GetAccountBalanceData()
+        {
+            return new List<AccountBalance>()
+            {
+                new AccountBalance() { Id = 1, UserId = 1, CurrencyId = 1, Balance = 1337 }
             };
         }
     }
