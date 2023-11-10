@@ -1,6 +1,4 @@
 ﻿
-using System.Text.Json.Serialization;
-
 namespace Exchange.API.Models
 {
     public class AccountBalance : IAggregateRoot

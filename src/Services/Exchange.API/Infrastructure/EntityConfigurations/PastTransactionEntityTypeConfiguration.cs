@@ -51,6 +51,10 @@ namespace Exchange.API.Infrastructure.EntityConfigurations
                 .HasColumnType("decimal(19,4)")
                 .IsRequired();
 
+            builder.Property(p => p.CreditedAmount)
+                .HasColumnType("decimal(19,4)")
+                .IsRequired();
+
             builder.Property(p => p.TimeEffected)
                 .IsRequired();
 

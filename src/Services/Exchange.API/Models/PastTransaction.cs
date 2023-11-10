@@ -18,7 +18,7 @@
 
         public decimal DebitedAmount { get; set; }
 
-        public decimal CreditedAmount => DebitedAmount * ExchangeRate;
+        public decimal CreditedAmount { get; set; }
 
         public DateTime TimeEffected { get; set; }
 
@@ -37,7 +37,7 @@
 
         }
 
-        public PastTransaction(User user, AccountBalance fromAccountBalance, AccountBalance toAccountBalance, decimal debitedAmount, DateTime timeEffected, Currency fromCurrency, Currency toCurrency, decimal exchangeRate)
+        public PastTransaction(User user, AccountBalance fromAccountBalance, AccountBalance toAccountBalance, decimal debitedAmount, decimal creditedAmount, DateTime timeEffected, Currency fromCurrency, Currency toCurrency, decimal exchangeRate)
         {
             UserId = user.Id;
             FromAccountBalanceId = fromAccountBalance.Id;
@@ -45,6 +45,7 @@
             ToCurrencyId = toCurrency.Id;
             ToAccountBalanceId = toAccountBalance.Id;
             DebitedAmount = debitedAmount;
+            CreditedAmount = creditedAmount;
             TimeEffected = timeEffected;
             FromCurrencyId = fromCurrency.Id;
             ToCurrencyId = toCurrency.Id;

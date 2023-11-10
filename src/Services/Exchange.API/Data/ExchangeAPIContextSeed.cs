@@ -61,7 +61,8 @@ namespace Exchange.API.Data
             return new List<AccountBalance>()
             {
                 new AccountBalance() { Id = 1, UserId = 1, CurrencyId = 1, Balance = 1337 },
-                new AccountBalance() { Id = 2, UserId = 1, CurrencyId = 2, Balance = 333 }
+                new AccountBalance() { Id = 2, UserId = 1, CurrencyId = 2, Balance = 333 },
+                new AccountBalance() { Id = 3, UserId = 1, CurrencyId = 3, Balance = 999 }
             };
         }
 

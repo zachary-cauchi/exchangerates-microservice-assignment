@@ -12,6 +12,13 @@ services:
       - 5340:80
       - 5341:5341
 
+  exchange.redis:
+    image: redis:alpine
+    container_name: exchange.redis
+    hostname: exchange.redis
+    ports:
+      - 6379:6379
+
   exchange.db:
     image: mcr.microsoft.com/mssql/server
     container_name: exchange.db

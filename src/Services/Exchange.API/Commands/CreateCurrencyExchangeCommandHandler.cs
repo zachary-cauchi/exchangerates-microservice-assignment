@@ -57,12 +57,13 @@
 
             await _accountBalanceRepository.UnitOfWork.ExecuteTransactionAsync(() =>
             {
-                destAccountBalance.Balance += creditAmount;
                 srcAccountBalance.Balance -= debitAmount;
+                destAccountBalance.Balance += creditAmount;
+                _accountBalanceRepository.UpdateAccountBalance(srcAccountBalance);
                 _accountBalanceRepository.UpdateAccountBalance(destAccountBalance);
             }, "CreateCurrencyExchangeCommandHandler", cancellationToken);
 
-            PastTransaction pastTransaction = new PastTransaction(user, srcAccountBalance, destAccountBalance, debitAmount, DateTime.UtcNow, srcCurrency, destCurrency, exchangeRate);
+            PastTransaction pastTransaction = new PastTransaction(user, srcAccountBalance, destAccountBalance, debitAmount, creditAmount, DateTime.UtcNow, srcCurrency, destCurrency, exchangeRate);
             await _pastTransactionRepository.UnitOfWork.ExecuteTransactionAsync(() =>
             {
                 _pastTransactionRepository.Add(pastTransaction);

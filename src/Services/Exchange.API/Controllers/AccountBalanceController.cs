@@ -39,11 +39,25 @@ namespace Exchange.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<PastTransaction>> ExchangeCurrenciesBetweenUserAccountsAsync(int srcAccountId, int destAccountId, decimal srcAmount)
         {
-            //AccountBalance accountBalance;
+            var srcAccountBalance = await _service.GetAccountBalanceByIdAsync(srcAccountId);
+            var destAccountBalance = await _service.GetAccountBalanceByIdAsync(destAccountId);
+
+            if (srcAccountBalance == null)
+            {
+                return BadRequest($"Source account with Id ({srcAccountId}) was not found. Cannot continue.");
+            }
+
+            if (destAccountBalance == null)
+            {
+                return BadRequest($"Destination account with Id ({destAccountId}) was not found. Cannot continue.");
+            }
 
             try
             {
-                CreateCurrencyExchangeCommand createCurrencyExchangeCommand = new CreateCurrencyExchangeCommand(fromAccountBalanceId: srcAccountId, toAccountBalanceId: destAccountId, debitAmount: srcAmount, timeOfRate: DateTime.UtcNow, exchangeRate: 2);
+                GetCurrencyExchangeRateCommand getCurrencyExchangeRateCommand = new GetCurrencyExchangeRateCommand(srcAccountBalance.CurrencyId, destAccountBalance.CurrencyId);
+                var exchangeRate = await _mediator.Send(getCurrencyExchangeRateCommand);
+
+                CreateCurrencyExchangeCommand createCurrencyExchangeCommand = new CreateCurrencyExchangeCommand(fromAccountBalanceId: srcAccountId, toAccountBalanceId: destAccountId, debitAmount: srcAmount, timeOfRate: exchangeRate.TimeAccessed, exchangeRate: exchangeRate.Rate);
                 var result = await _mediator.Send(createCurrencyExchangeCommand);
                 return result;
             }
