@@ -25,5 +25,24 @@
                 .Include(p => p.ToCurrency)
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<PastTransaction>> GetPastTransactionsByUserSinceDateTimeAsync(int userId, DateTime threshold)
+        {
+            return await _context.PastTransactions
+                .Where(p => p.UserId == userId)
+                .Where(p => p.TimeEffected > threshold)
+                .Include(p => p.User)
+                .Include(p => p.FromCurrency)
+                .Include(p => p.ToCurrency)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetPastTransactionsCountByUserSinceDateTimeAsync(int userId, DateTime threshold)
+        {
+            return await _context.PastTransactions
+                .Where(p => p.UserId == userId)
+                .Where(p => p.TimeEffected > threshold)
+                .CountAsync();
+        }
     }
 }

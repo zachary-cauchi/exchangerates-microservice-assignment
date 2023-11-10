@@ -6,10 +6,10 @@ namespace Exchange.API.Commands
     {
         private readonly ICurrencyRepository _currencyRepository;
         private readonly IDistributedCache _cache;
-        private readonly IExchangeRateFixerService _exchangeRateFixerService;
+        private readonly IExchangeRateService _exchangeRateFixerService;
         private ILogger<GetCurrencyExchangeRateCommandHandler> _logger;
 
-        public GetCurrencyExchangeRateCommandHandler(ICurrencyRepository currencyRepository, IDistributedCache cache, ILogger<GetCurrencyExchangeRateCommandHandler> logger, IExchangeRateFixerService exchangeRateFixerService)
+        public GetCurrencyExchangeRateCommandHandler(ICurrencyRepository currencyRepository, IDistributedCache cache, ILogger<GetCurrencyExchangeRateCommandHandler> logger, IExchangeRateService exchangeRateFixerService)
         {
             _currencyRepository = currencyRepository ?? throw new ArgumentNullException(nameof(currencyRepository));
             _cache = cache ?? throw new ArgumentNullException(nameof(cache));

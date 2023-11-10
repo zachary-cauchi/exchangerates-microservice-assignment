@@ -10,6 +10,9 @@
         private readonly IMediator _mediator;
         private readonly ILogger<CreateCurrencyExchangeCommandHandler> _logger;
 
+        private readonly int hoursThreshold = 1;
+        private readonly int maxTransactionsPerTimeframe = 10;
+
         public CreateCurrencyExchangeCommandHandler(ExchangeAPIContext context, IAccountBalanceRepository accountBalanceRepository, IPastTransactionRepository pastTransactionRepository, IUserRepository userRepository, ICurrencyRepository currencyRepository, IMediator mediator, ILogger<CreateCurrencyExchangeCommandHandler> logger)
         {
             _context = context;
@@ -54,6 +57,14 @@
             User? user = await _userRepository.GetUserByIdAsync(srcAccountBalance.UserId);
 
             if (user == null) throw new InvalidOperationException($"User ({srcAccountBalance.UserId}) does not exist. Cannot proceed.");
+
+            var threshold = DateTime.UtcNow.AddHours(hoursThreshold * -1);
+            int transactionsPastHourCount = await _pastTransactionRepository.GetPastTransactionsCountByUserSinceDateTimeAsync(user.Id, threshold);
+
+            if (transactionsPastHourCount >= maxTransactionsPerTimeframe)
+            {
+                throw new InvalidOperationException($"The user exceeded the number of transactions that can be done in the past ({hoursThreshold}) hour(s); Only ({transactionsPastHourCount}) transactions are allowed.");
+            }
 
             await _accountBalanceRepository.UnitOfWork.ExecuteTransactionAsync(() =>
             {
