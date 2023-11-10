@@ -67,7 +67,7 @@
         {
             return new List<PastTransaction>()
             {
-                new PastTransaction() { Id = 1, UserId = 1, FromAccountBalanceId = 2, ToAccountBalanceId = 1, DebitedAmount = 20, TimeEffected = new DateTime(2023, 11, 08, 06, 06, 06), ExchangeRate = 2, FromCurrencyId = 2, ToCurrencyId = 1 }
+                new PastTransaction() { Id = 2, UserId = 1, FromAccountBalanceId = 2, ToAccountBalanceId = 1, DebitedAmount = 20, TimeEffected = new DateTime(2023, 11, 08, 06, 06, 06), ExchangeRate = 2, FromCurrencyId = 2, ToCurrencyId = 1 }
             };
         }
     }
