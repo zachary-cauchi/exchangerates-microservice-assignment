@@ -44,30 +44,30 @@ namespace Exchange.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<PastTransaction>> ExchangeCurrenciesBetweenUserAccountsAsync(int srcAccountId, int destAccountId, decimal srcAmount)
         {
-            _logger.LogInformation("Preparing currency exchange of amount ({amount}) from account balance ({id}) to account balance ({id}).", srcAccountId, destAccountId, srcAmount);
+            _logger.LogInformation("Preparing currency exchange of amount ({amount}) from account balance ({srcId}) to account balance ({destId}).", srcAmount, srcAccountId, destAccountId);
 
-            _logger.LogInformation("Checking account balances ({id}) and ({id}) exist.", srcAccountId, destAccountId);
+            _logger.LogInformation("Checking account balances ({srcId}) and ({destId}) exist.", srcAccountId, destAccountId);
 
             var srcAccountBalance = await _service.GetAccountBalanceByIdAsync(srcAccountId);
             var destAccountBalance = await _service.GetAccountBalanceByIdAsync(destAccountId);
 
             if (srcAccountBalance == null)
             {
-                _logger.LogWarning("Source account balance ({id}) was not found.", srcAccountId);
+                _logger.LogWarning("Source account balance ({srcId}) was not found.", srcAccountId);
 
                 return BadRequest($"Source account with Id ({srcAccountId}) was not found. Cannot continue.");
             }
 
             if (destAccountBalance == null)
             {
-                _logger.LogWarning("Destination account balance ({id}) was not found.", destAccountId);
+                _logger.LogWarning("Destination account balance ({destId}) was not found.", destAccountId);
 
                 return BadRequest($"Destination account with Id ({destAccountId}) was not found. Cannot continue.");
             }
 
             try
             {
-                _logger.LogInformation("Both accounts found. Getting exchange rate from currency ({id}) to currency ({id}).", srcAccountBalance.CurrencyId, destAccountBalance.CurrencyId);
+                _logger.LogInformation("Both accounts found. Getting exchange rate from currency ({srcId}) to currency ({destId}).", srcAccountBalance.CurrencyId, destAccountBalance.CurrencyId);
                 
                 GetCurrencyExchangeRateCommand getCurrencyExchangeRateCommand = new GetCurrencyExchangeRateCommand(srcAccountBalance.CurrencyId, destAccountBalance.CurrencyId);
                 var exchangeRate = await _mediator.Send(getCurrencyExchangeRateCommand);

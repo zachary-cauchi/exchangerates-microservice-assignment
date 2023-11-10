@@ -32,7 +32,7 @@ services:
     image: ${DOCKER_REGISTRY-}exchangeapi
     build:
       context: .
-      dockerfile: src/Services/Exchange.API/Dockerfile
+      dockerfile: src/Services/Exchange/Exchange.API/Dockerfile
     depends_on:
       - exchange.db
       - seq

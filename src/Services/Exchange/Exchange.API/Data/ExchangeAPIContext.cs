@@ -30,16 +30,24 @@
             builder.ApplyConfiguration(new PastTransactionEntityTypeConfiguration());
         }
 
-        public Task ExecuteTransactionAsync(Action transactionChanges, string message, CancellationToken? cancellationToken = null)
+        public Task ExecuteTransactionAsync(Action transactionChanges, string message, CancellationToken cancellationToken = default)
         {
-            var strategy = Database.CreateExecutionStrategy();
-
-            return strategy.ExecuteAsync(async () =>
+            // This can be improved much further.
+            // Right now it lacks any means of immediately confirming that transactions were successful.
+            return Database.CreateExecutionStrategy().ExecuteAsync(async () =>
             {
                 await using var transaction = await BeginTransactionAsync();
+
+                if (transaction == null)
+                {
+                    _logger.LogDebug("Could not begin new transaction for ({message}).", message);
+
+                    throw new Exception($"Could not begin new transaction for ({message}).");
+                }
+
                 using (_logger.BeginScope($"ExchangeAPIContext::{message}"))
                 {
-                    _logger.LogInformation("Begin transaction {TransactionId} ({message}).", transaction.TransactionId, message);
+                    _logger.LogTrace("Begin transaction {TransactionId} ({message}).", transaction.TransactionId, message);
 
                     try
                     {
@@ -47,16 +55,16 @@
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError($"Could not complete transaction {transaction.TransactionId} ({message}).", ex);
+                        _logger.LogDebug($"Could not complete transaction {transaction.TransactionId} ({message}).", ex);
 
                         return;
                     }
 
-                    _logger.LogInformation("Commit transaction {TransactionId} ({message}).", transaction.TransactionId, message);
+                    _logger.LogTrace("Commit transaction {TransactionId} ({message}).", transaction.TransactionId, message);
 
-                    await CommitTransactionAsync(transaction);
+                    await CommitTransactionAsync(transaction, cancellationToken);
 
-                    _logger.LogInformation("Completed transaction {TransactionId} ({message}).", transaction.TransactionId, message);
+                    _logger.LogTrace("Completed transaction {TransactionId} ({message}).", transaction.TransactionId, message);
                 }
             });
         }
@@ -70,14 +78,14 @@
             return _currentTransaction;
         }
 
-        public async Task CommitTransactionAsync(IDbContextTransaction transaction)
+        public async Task CommitTransactionAsync(IDbContextTransaction transaction, CancellationToken token = default)
         {
             if (transaction == null) throw new ArgumentNullException(nameof(transaction));
             if (transaction != _currentTransaction) throw new InvalidOperationException($"Transaction of id {transaction.TransactionId} does not match the current transaction.");
 
             try
             {
-                await SaveChangesAsync();
+                await SaveChangesAsync(token);
                 await transaction.CommitAsync();
             }
             catch
