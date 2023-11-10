@@ -36,7 +36,7 @@ services.AddScoped<ICurrencyService, CurrencyService>();
 services.AddScoped<IUserService, UserService>();
 services.AddScoped<IAccountBalanceService, AccountBalanceService>();
 services.AddScoped<IPastTransactionService, PastTransactionService>();
-services.AddScoped<IExchangeRateFixerService, ExchangeRateFixerService>();
+services.AddScoped<IExchangeRateService, ExchangeRateFixerService>();
 
 // Configure logging.
 
@@ -64,7 +64,7 @@ services.AddSingleton<IValidator<CreateCurrencyExchangeCommand>, CreateCurrencyE
 string apiKey = builder.Configuration.GetValue<string>("ExchangeRateProviders:Fixer:ApiKey") ?? throw new ArgumentNullException("No Fixer API key was found. Cannot call API.");
 string connectionString = builder.Configuration.GetValue<string>("ExchangeRateProviders:Fixer:BaseAddress") ?? "https://api.exchangeratesapi.io/v1/latest";
 
-builder.Services.AddHttpClient<IExchangeRateFixerService, ExchangeRateFixerService>(client =>
+builder.Services.AddHttpClient<IExchangeRateService, ExchangeRateFixerService>(client =>
 {
     string connectionString = builder.Configuration.GetValue<string>("ExchangeRateProviders:Fixer:BaseAddress") ?? "https://api.exchangeratesapi.io/v1/";
     client.BaseAddress = new Uri(connectionString);

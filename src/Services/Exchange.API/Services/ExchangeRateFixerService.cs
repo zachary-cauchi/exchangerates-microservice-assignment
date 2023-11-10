@@ -1,6 +1,6 @@
 ﻿namespace Exchange.API.Services
 {
-    public class ExchangeRateFixerService : IExchangeRateFixerService
+    public class ExchangeRateFixerService : IExchangeRateService
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _config;
