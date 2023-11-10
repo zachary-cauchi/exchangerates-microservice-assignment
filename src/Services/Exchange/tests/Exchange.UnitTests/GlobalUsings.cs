@@ -1,4 +1,13 @@
 global using Xunit;
 global using Exchange.API.Controllers;
 global using Exchange.API.Services;
+global using Exchange.API.Repositories;
+global using MediatR;
 global using Moq;
+global using Microsoft.Extensions.Caching.Distributed;
+global using Exchange.API.Commands;
+global using Microsoft.Extensions.Logging;
+global using Exchange.API.Data;
+global using Exchange.API.Models;
+global using Exchange.API.Extensions;
+global using System.Text.Json;
