@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-
-namespace Exchange.API.Models
+﻿namespace Exchange.API.Models
 {
     public interface IUnitOfWork : IDisposable
     {

@@ -48,7 +48,7 @@
                     catch (Exception ex)
                     {
                         _logger.LogError($"Could not complete transaction {transaction.TransactionId} ({message}).", ex);
-                        
+
                         return;
                     }
 

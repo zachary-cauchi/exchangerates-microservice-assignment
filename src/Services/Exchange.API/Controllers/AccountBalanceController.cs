@@ -1,6 +1,4 @@
-﻿using Exchange.API.Models;
-using Exchange.API.Services;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Exchange.API.Controllers
 {

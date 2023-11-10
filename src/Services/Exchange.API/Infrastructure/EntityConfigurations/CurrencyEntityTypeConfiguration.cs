@@ -1,6 +1,4 @@
-﻿using Exchange.API.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Exchange.API.Infrastructure.EntityConfigurations
 {

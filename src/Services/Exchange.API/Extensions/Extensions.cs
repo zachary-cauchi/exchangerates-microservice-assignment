@@ -1,8 +1,4 @@
-﻿using Exchange.API.Data;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Exchange.API.Extensions
 {

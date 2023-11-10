@@ -26,7 +26,7 @@
 
         public Currency FromCurrency { get; set; } = null!;
 
-        public int ToCurrencyId { get; set;}
+        public int ToCurrencyId { get; set; }
 
         public Currency ToCurrency { get; set; } = null!;
 

@@ -18,7 +18,7 @@ namespace Exchange.API.Commands
         public DateTime TimeOfRate { get; private set; }
 
         [DataMember]
-        public decimal ExchangeRate {  get; private set; }
+        public decimal ExchangeRate { get; private set; }
 
         public CreateCurrencyExchangeCommand()
         {

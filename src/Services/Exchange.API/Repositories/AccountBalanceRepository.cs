@@ -1,8 +1,4 @@
-﻿using Exchange.API.Data;
-using Exchange.API.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace Exchange.API.Repositories
+﻿namespace Exchange.API.Repositories
 {
     public class AccountBalanceRepository : IAccountBalanceRepository
     {

@@ -1,7 +1,4 @@
-﻿using Exchange.API.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace Exchange.API.Data
+﻿namespace Exchange.API.Data
 {
     public class ExchangeAPIContextSeed
     {

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-
-namespace Exchange.API.Services
+﻿namespace Exchange.API.Services
 {
     public class AccountBalanceService : IAccountBalanceService
     {

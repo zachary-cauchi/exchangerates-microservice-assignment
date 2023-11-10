@@ -1,6 +1,4 @@
 ﻿using Serilog;
-using Serilog.Core;
-using System.Configuration;
 
 namespace Exchange.API.Extensions
 {

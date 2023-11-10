@@ -33,7 +33,7 @@ services.AddScoped<IPastTransactionRepository, PastTransactionRepository>();
 // Add services.
 
 services.AddScoped<ICurrencyService, CurrencyService>();
-services.AddScoped<IUserService,  UserService>();
+services.AddScoped<IUserService, UserService>();
 services.AddScoped<IAccountBalanceService, AccountBalanceService>();
 services.AddScoped<IPastTransactionService, PastTransactionService>();
 services.AddScoped<IExchangeRateFixerService, ExchangeRateFixerService>();
@@ -44,7 +44,8 @@ builder.ConfigureExchangeLogging(builder.Configuration);
 
 // Configure MediatR
 
-services.AddMediatR(cfg => {
+services.AddMediatR(cfg =>
+{
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
 });
 

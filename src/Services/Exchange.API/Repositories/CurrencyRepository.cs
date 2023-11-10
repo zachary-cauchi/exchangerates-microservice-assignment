@@ -1,8 +1,4 @@
-﻿using Exchange.API.Data;
-using Exchange.API.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace Exchange.API.Repositories
+﻿namespace Exchange.API.Repositories
 {
     public class CurrencyRepository : ICurrencyRepository
     {
@@ -18,7 +14,7 @@ namespace Exchange.API.Repositories
         public async Task<Currency?> GetCurrencyByIdAsync(int id)
         {
             var currency = await _context.Currency.FirstOrDefaultAsync(c => c.Id == id);
-            
+
             if (currency == null)
             {
                 currency = _context.Currency.Local.FirstOrDefault(c => c.Id == id);

@@ -1,7 +1,4 @@
-﻿using Exchange.API.Models;
-
-
-namespace Exchange.API.Services
+﻿namespace Exchange.API.Services
 {
     public class CurrencyService : ICurrencyService
     {

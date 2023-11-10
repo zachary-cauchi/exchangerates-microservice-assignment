@@ -1,6 +1,4 @@
-﻿using Exchange.API.Models;
-
-namespace Exchange.API.Services
+﻿namespace Exchange.API.Services
 {
     public interface IAccountBalanceService
     {

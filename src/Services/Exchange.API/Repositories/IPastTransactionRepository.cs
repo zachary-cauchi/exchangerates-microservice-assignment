@@ -1,6 +1,4 @@
-﻿using Exchange.API.Models;
-
-namespace Exchange.API.Repositories
+﻿namespace Exchange.API.Repositories
 {
     public interface IPastTransactionRepository : IRepository<PastTransaction>
     {

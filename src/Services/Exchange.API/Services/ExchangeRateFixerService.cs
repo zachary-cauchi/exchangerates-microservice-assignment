@@ -1,8 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
-using NuGet.Protocol;
-
-namespace Exchange.API.Services
+﻿namespace Exchange.API.Services
 {
     public class ExchangeRateFixerService : IExchangeRateFixerService
     {
