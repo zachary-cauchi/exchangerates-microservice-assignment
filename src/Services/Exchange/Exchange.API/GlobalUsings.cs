@@ -1,0 +1,13 @@
+﻿global using Exchange.API.Commands;
+global using Exchange.API.Data;
+global using Exchange.API.Extensions;
+global using Exchange.API.Infrastructure.EntityConfigurations;
+global using Exchange.API.Models;
+global using Exchange.API.Repositories;
+global using Exchange.API.Services;
+global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Storage;
+global using System.Data;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
