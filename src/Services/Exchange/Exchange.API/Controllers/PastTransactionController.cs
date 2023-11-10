@@ -18,12 +18,19 @@ namespace Exchange.API.Controllers
         [HttpGet(Name = "/{userTransactionsId}")]
         public async Task<ActionResult<IEnumerable<PastTransaction>>> GetPastTransactionsByUserIdAsync([FromQuery] int userTransactionsId)
         {
+
+            _logger.LogInformation("Getting past transactions for user id ({id})", userTransactionsId);
+
             var pastTransactions = await _service.GetPastTransactionsByUserIdAsync(userTransactionsId);
 
             if (pastTransactions == null)
             {
+                _logger.LogWarning("Could not find any transactions for user id ({id}).", userTransactionsId);
+
                 return NotFound();
             }
+
+            _logger.LogInformation("Found {count} transactions for user id ({id}).", pastTransactions.Count(), userTransactionsId);
 
             return Ok(pastTransactions);
         }

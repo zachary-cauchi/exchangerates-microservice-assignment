@@ -7,7 +7,7 @@ namespace Exchange.API.Controllers
     public class CurrencyController : Controller
     {
         private readonly ICurrencyService _service;
-        private readonly ILogger _logger;
+        private readonly ILogger<CurrencyController> _logger;
 
         public CurrencyController(ICurrencyService service, ILogger<CurrencyController> logger)
         {
@@ -20,14 +20,18 @@ namespace Exchange.API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Currency>> GetCurrencyByIdAsync([FromQuery] int currencyId)
         {
+            _logger.LogInformation("Getting currency ({id}).", currencyId);
+
             var currency = await _service.GetCurrencyByIdAsync(currencyId);
 
             if (currency == null)
             {
-                _logger.LogWarning($"Tried looking for currency {currencyId} but was not found.");
+                _logger.LogWarning("Currency ({currencyId}) was not found.", currencyId);
 
                 return NotFound();
             }
+
+            _logger.LogInformation("Found currency ({currencyId})", currencyId);
 
             return Ok(currency);
         }

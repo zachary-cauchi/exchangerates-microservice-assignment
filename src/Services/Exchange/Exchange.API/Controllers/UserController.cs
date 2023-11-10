@@ -7,7 +7,7 @@ namespace Exchange.API.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _service;
-        private readonly ILogger _logger;
+        private readonly ILogger<UserController> _logger;
 
         public UserController(IUserService service, ILogger<UserController> logger)
         {
