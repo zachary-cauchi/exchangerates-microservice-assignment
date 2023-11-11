@@ -4,17 +4,22 @@
     {
         private readonly ILogger<ExchangeAPIContext> _logger;
 
-        public DbSet<Currency> Currency { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<AccountBalance> AccountBalances { get; set; }
+        public virtual DbSet<Currency> Currency { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<AccountBalance> AccountBalances { get; set; }
 
-        public DbSet<PastTransaction> PastTransactions { get; set; }
+        public virtual DbSet<PastTransaction> PastTransactions { get; set; }
 
         private IDbContextTransaction? _currentTransaction = null;
 
         public IDbContextTransaction? CurrentTransaction { get; }
 
         public bool HasActiveTransaction => _currentTransaction != null;
+
+        public ExchangeAPIContext() : base()
+        {
+
+        }
 
         public ExchangeAPIContext(DbContextOptions<ExchangeAPIContext> options, ILogger<ExchangeAPIContext> logger)
             : base(options)
@@ -30,7 +35,7 @@
             builder.ApplyConfiguration(new PastTransactionEntityTypeConfiguration());
         }
 
-        public Task ExecuteTransactionAsync(Action transactionChanges, string message, CancellationToken cancellationToken = default)
+        public virtual Task ExecuteTransactionAsync(Action transactionChanges, string message, CancellationToken cancellationToken = default)
         {
             // This can be improved much further.
             // Right now it lacks any means of immediately confirming that transactions were successful.

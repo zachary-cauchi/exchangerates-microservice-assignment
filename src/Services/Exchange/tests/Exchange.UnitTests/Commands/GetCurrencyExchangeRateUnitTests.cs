@@ -20,35 +20,15 @@ namespace Exchange.UnitTests.Commands
             _contextMock = new Mock<IUnitOfWork>();
         }
 
-        public Currency[] GetValidCurrencyPair()
-        {
-            return new Currency[]
-            {
-                new Currency() { Id = 1, Name = "Euro", Code = "EUR" },
-                new Currency() { Id = 2, Name = "Dollar", Code = "USD" }
-            };
-        }
-
-        public ExchangeRate GetValidExchangeRate()
-        {
-            return new ExchangeRate("EUR", "USD", DateTime.UtcNow, "Test", 2);
-        }
-
-        public void MockCacheKeyForReturnValue(Mock<IDistributedCache> cache, string key, string value)
-        {
-            // Extension methods aren't supported, so we have to mock the internal non-extended function.
-            cache.Setup(x => x.GetAsync(It.Is<string>(y => y == key), It.IsAny<CancellationToken>())).ReturnsAsync(() => Encoding.UTF8.GetBytes(value));
-        }
-
         [Fact]
-        public async Task Valid_currency_exchange_in_cache_returned()
+        public async Task Valid_get_exchange_rate_in_cache_returned()
         {
             // Arrange
-            Currency[] currencies = GetValidCurrencyPair();
+            Currency[] currencies = DataBuilders.GetValidCurrencyPair();
             Currency srcCurrency = currencies[0];
             Currency destCurrency = currencies[1];
 
-            ExchangeRate exchangeRate = GetValidExchangeRate();
+            ExchangeRate exchangeRate = DataBuilders.GetValidExchangeRate();
             string exchangeRateSerialized = JsonSerializer.Serialize(exchangeRate);
             byte[] exchangeRateBytes = Encoding.UTF8.GetBytes(exchangeRateSerialized);
 
@@ -56,7 +36,7 @@ namespace Exchange.UnitTests.Commands
             _currencyRepositoryMock.Setup(x => x.GetCurrencyByIdAsync(It.Is<int>(y => y == 1))).ReturnsAsync(() => srcCurrency);
             _currencyRepositoryMock.Setup(x => x.GetCurrencyByIdAsync(It.Is<int>(y => y == 2))).ReturnsAsync(() => destCurrency);
 
-            MockCacheKeyForReturnValue(_cacheMock, exchangeRate.Key, exchangeRateSerialized);
+            DataBuilders.MockCacheKeyForReturnValue(_cacheMock, exchangeRate.Key, exchangeRateSerialized);
 
             // Act
             GetCurrencyExchangeRateCommandHandler handler = new GetCurrencyExchangeRateCommandHandler(_currencyRepositoryMock.Object, _cacheMock.Object, _loggerMock.Object, _exchangeRateServiceMock.Object);
@@ -69,14 +49,14 @@ namespace Exchange.UnitTests.Commands
         }
 
         [Fact]
-        public async Task Valid_currency_exchange_no_cache_api_called_returned()
+        public async Task Valid_get_exchange_rate_no_cache_api_called_returned()
         {
             // Arrange
-            Currency[] currencies = GetValidCurrencyPair();
+            Currency[] currencies = DataBuilders.GetValidCurrencyPair();
             Currency srcCurrency = currencies[0];
             Currency destCurrency = currencies[1];
 
-            ExchangeRate exchangeRate = GetValidExchangeRate();
+            ExchangeRate exchangeRate = DataBuilders.GetValidExchangeRate();
             string exchangeRateSerialized = JsonSerializer.Serialize(exchangeRate);
             byte[] exchangeRateBytes = Encoding.UTF8.GetBytes(exchangeRateSerialized);
 
