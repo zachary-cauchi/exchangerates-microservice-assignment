@@ -2,7 +2,6 @@
 {
     public class CreateCurrencyExchangeCommandHandler : IRequestHandler<CreateCurrencyExchangeCommand, PastTransaction>
     {
-        private readonly ExchangeAPIContext _context;
         private readonly IAccountBalanceRepository _accountBalanceRepository;
         private readonly IPastTransactionRepository _pastTransactionRepository;
         private readonly IUserRepository _userRepository;
@@ -13,9 +12,8 @@
         private readonly int hoursThreshold = 1;
         private readonly int maxTransactionsPerTimeframe = 10;
 
-        public CreateCurrencyExchangeCommandHandler(ExchangeAPIContext context, IAccountBalanceRepository accountBalanceRepository, IPastTransactionRepository pastTransactionRepository, IUserRepository userRepository, ICurrencyRepository currencyRepository, IMediator mediator, ILogger<CreateCurrencyExchangeCommandHandler> logger)
+        public CreateCurrencyExchangeCommandHandler(IAccountBalanceRepository accountBalanceRepository, IPastTransactionRepository pastTransactionRepository, IUserRepository userRepository, ICurrencyRepository currencyRepository, IMediator mediator, ILogger<CreateCurrencyExchangeCommandHandler> logger)
         {
-            _context = context;
             _accountBalanceRepository = accountBalanceRepository ?? throw new ArgumentNullException(nameof(accountBalanceRepository));
             _pastTransactionRepository = pastTransactionRepository ?? throw new ArgumentNullException(nameof(pastTransactionRepository));
             _userRepository = userRepository;
